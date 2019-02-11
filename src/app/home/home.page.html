@@ -1,12 +1,21 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="Secondary">
+    <ion-menu-button (click)="openMenu()" slot="start">
+      <ion-icon name="menu"></ion-icon>
+    </ion-menu-button>
     <ion-title>
-      Ionic Blank
+      Home
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
+
+
 <ion-content padding>
-  The world is your oyster.
-  <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
+    <ion-list>
+    <ion-item *ngFor="let prod of productos">
+      {{prod.Descripcion}}
+    </ion-item>
+  </ion-list>
+  
 </ion-content>

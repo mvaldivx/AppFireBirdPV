@@ -1,5 +1,7 @@
 {
   "name": "firebird",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

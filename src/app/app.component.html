@@ -1,3 +1,20 @@
+<ion-menu side="start" menuId="first">
+  <ion-header>
+    <ion-toolbar color="secondary">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item (click)="CerrarSesion()">Cerrar sesion</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-router-outlet main></ion-router-outlet>
 </ion-app>
