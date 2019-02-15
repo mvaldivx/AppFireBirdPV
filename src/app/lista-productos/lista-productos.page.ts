@@ -8,7 +8,8 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./lista-productos.page.scss'],
 })
 export class ListaProductosPage implements OnInit {
-productos;
+productos: any[]= [];
+productosShow:any[] = [];
 fCodigo:'';
 fDescripcion:'';
 
@@ -27,8 +28,18 @@ fDescripcion:'';
 
   getData(){
     this.http.get('http://localhost:55688/api/Productos/GetProductos',{}).subscribe(data => {
-      this.productos = data;
-      console.log(JSON.stringify(data));
+      var prod ;
+      prod = data;
+      console.log(prod);
+      prod.forEach(element => {
+        this.productos.push({id:element.id, 
+                            codigo: element.codigo, 
+                            Descripcion: element.Descripcion, 
+                            Existencia: element.Existencia, 
+                            Costo: element.Costo, 
+                            Visible: true})
+      });
+      this.productosShow = this.productos;
     })
   }
 
@@ -42,7 +53,23 @@ fDescripcion:'';
     }else{
       this.fCodigo='';
     }
-
-    console.log(tipo)
+    if(this.fCodigo.length > 0 || this.fDescripcion.length > 0){
+      this.productos.forEach(element => {
+        var cadena='';
+        if(tipo === 0){
+          cadena = this.fCodigo;
+        }else{
+          cadena = this.fDescripcion;
+        }
+        if(element.codigo.length >= cadena.length){
+          if(element.codigo.substring(0,cadena.length) == cadena){
+            element.Visible = true;
+          }else{
+            element.Visible = false;
+          }
+        }
+      });
+    }
+    
   }
 }
