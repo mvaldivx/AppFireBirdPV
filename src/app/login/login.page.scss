@@ -1,4 +1,11 @@
+@font-face {
+    font-family: 'Lato-Light';
+    src: url('https://fonts.googleapis.com/css?family=Montserrat') format('embedded-opentype'), url('https://fonts.googleapis.com/css?family=Montserrat') format('woff'), url('https://fonts.googleapis.com/css?family=Montserrat') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 .contenido{
+    --ion-font-family: 'Montserrat', sans-serif !important;
     width: 50%;
     max-width: 500px;
     min-width: 300px;
@@ -19,7 +26,9 @@
         margin-right: auto;
         margin-top: 10%;
     }
+    --background: white;
 }
-.login{
-    background-color: #8099c5;
+.loginback{
+    --background: #8099c5;
+
 }

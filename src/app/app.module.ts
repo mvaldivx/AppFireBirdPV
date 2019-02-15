@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from  '@angular/common/http';
 
 import { IonicStorageModule } from '@ionic/storage';
+import { ListaProductosPageModule } from './lista-productos/lista-productos.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +21,9 @@ import { IonicStorageModule } from '@ionic/storage';
     IonicModule.forRoot(), 
     HttpClientModule,
     IonicStorageModule.forRoot(),
-    AppRoutingModule],
+    AppRoutingModule,
+    ListaProductosPageModule
+  ],
   providers: [
     StatusBar,
     SplashScreen,

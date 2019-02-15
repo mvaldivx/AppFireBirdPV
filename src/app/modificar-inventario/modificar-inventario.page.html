@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar >
+      <ion-back-button icon="close" slot="start">
+      </ion-back-button>
+    <ion-title>Modificar Inventario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div >
+    <ion-button class="btn-escanear" color="secondary">
+      <ion-icon slot="start" name="barcode"></ion-icon>Escanear Codigo
+    </ion-button>
+  </div>
+  <div class="codigo">
+    <ion-button class="btn-buscar" color="secondary" (click) ="openModal()"><ion-icon name="search"></ion-icon></ion-button>
+      <ion-item>
+          <ion-label position="floating">Codigo</ion-label>
+          <ion-input clearInput [(ngModel)]="codigo" ></ion-input>
+      </ion-item>
+  </div>
+  <div class="cantidad">
+      <ion-item>
+          <ion-label position="floating">Ingresan</ion-label>
+          <ion-input clearInput ></ion-input>
+      </ion-item>
+  </div>
+  <div>
+    <p><span>Codigo: </span>{{Codigo}}</p>
+    <p><span>Descripcion: </span>{{Descripcion}}</p>
+    <p><span>Existencia: </span>{{Existencia}}</p>
+    <p><span>Costo: </span>{{Costo}}</p>
+  </div>
+</ion-content>

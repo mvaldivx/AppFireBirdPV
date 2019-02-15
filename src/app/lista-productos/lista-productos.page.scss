@@ -1,0 +1,13 @@
+.filtros{
+    width:100%;
+    ion-item{
+        display:inline-block;
+        margin-left:20px;
+    }
+    .codigo{
+        width:35%;
+    }
+    .descripcion{
+        width:45%;
+    }
+}

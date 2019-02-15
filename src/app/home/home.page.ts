@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
-import { MenuController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 import { isNull } from 'util';
 import { Router } from '@angular/router';
 
@@ -11,15 +10,13 @@ import { Router } from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  productos:any;
   constructor(
-    public http: HttpClient,
     public storage: Storage,
     public menu: MenuController,
-    public router: Router
+    public router: Router,
+    public navCtrl: NavController
   ){
     this.ValidaUsuario();
-    this.getData();
   }
 
   ValidaUsuario(){
@@ -30,12 +27,10 @@ export class HomePage {
     })
   }
 
-  getData(){
-    this.http.get('http://localhost:55688/api/Productos/GetProductos',{}).subscribe(data => {
-      this.productos = data;
-      console.log(JSON.stringify(data));
-    })
-  }
 
+
+  goPage(page){
+    this.router.navigateByUrl(page)
+  }
 
 }
