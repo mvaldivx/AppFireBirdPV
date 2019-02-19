@@ -4,11 +4,11 @@
       <ion-card-content>
         <ion-item>
           <ion-label position="floating"><ion-icon name="person"></ion-icon> Usuario</ion-label>
-          <ion-input></ion-input>
+          <ion-input  [(ngModel)]="usr"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating"><ion-icon name="key"></ion-icon> Contraseña</ion-label>
-          <ion-input type="password"></ion-input>
+          <ion-input type="password"  [(ngModel)]="pass"></ion-input>
         </ion-item>
         <div class="boton">
           <ion-button (click)="IniciarSesion()" color="secondary">Iniciar sesion</ion-button>
