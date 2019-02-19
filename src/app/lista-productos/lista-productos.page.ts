@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, LoadingController } from '@ionic/angular';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Storage } from '@ionic/storage';
+import { AlertController } from '@ionic/angular';
+import { IpMaquinaPage } from '../ip-maquina/ip-maquina.page';
 
 @Component({
   selector: 'app-lista-productos',
@@ -13,18 +16,60 @@ productosShow:any[] = [];
 fCodigo:'';
 fDescripcion:'';
 filtrado = false;
+ipServidor: any;
 
   constructor(
     public modalCtrl: ModalController,
     public http: HttpClient,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    public storage : Storage,
+    public alertCtrl: AlertController
   ) { 
   }
 
   ngOnInit() {
-    this.getData();
+    this.getIp();
   }
 
+  getIp(){
+    this.storage.get('ipServidor').then((data)=>{
+      if(data != undefined){
+        this.ipServidor = data;
+         this.getData();
+      }else{
+        this.presentAlert();
+      }      
+    });
+  }
+
+  async presentAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Error',
+      subHeader: 'IP de Servidor No asiganada',
+      message: 'Debe Configurar la ip del servidor.',
+      buttons: [{
+        text:'Aceptar', 
+        handler: () => {
+          this.configuraIp();
+       }
+      }]
+    });
+
+    await alert.present();
+  }
+
+  async configuraIp(){
+    const modal: HTMLIonModalElement =
+    await this.modalCtrl.create({
+        component: IpMaquinaPage,
+        componentProps: {
+          aParameter: true,
+          otherParameter: true
+        }
+    });
+    await modal.present();
+  }
+  
   closeModal(){
     this.modalCtrl.dismiss({codigo:''});
   }
@@ -42,18 +87,20 @@ filtrado = false;
   }
 
    async getData(){
-    this.productosShow=[];
-    this.http.get('http://localhost/firebird/ObtieneProductos.php',{}).subscribe(data => {
-      var prod ;
-      prod = data;
-      prod.forEach(element => {
-        this.productosShow.push({id:element.id, 
-                            codigo: element.codigo, 
-                            Descripcion: element.Descripcion, 
-                            Existencia: element.Existencia, 
-                            Venta: element.Venta})
-      });
-    })
+     if(this.ipServidor != undefined){
+        this.productosShow=[];
+      this.http.get('http://'+ this.ipServidor +'/firebird/ObtieneProductos.php',{}).subscribe(data => {
+        var prod ;
+        prod = data;
+        prod.forEach(element => {
+          this.productosShow.push({id:element.id, 
+                              codigo: element.codigo, 
+                              Descripcion: element.Descripcion, 
+                              Existencia: element.Existencia, 
+                              Venta: element.Venta})
+        });
+      })
+     }
   }
 
   filtrar(tipo){
@@ -74,7 +121,7 @@ filtrado = false;
       let data = new HttpParams().append('tipo', tipo).append('cadena',cadena).append('dataType', 'application/json; charset=utf-8');
       //data.append('cadena',cadena);
       
-      this.http.get('http://localhost/firebird/ProductosFiltrados.php',{params:data}).subscribe(data => {
+      this.http.get('http://'+ this.ipServidor +'/firebird/ProductosFiltrados.php',{params:data}).subscribe(data => {
         var prod ;
         prod = data;
         prod.forEach(element => {

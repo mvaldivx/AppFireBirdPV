@@ -12,6 +12,7 @@ import { HttpClientModule } from  '@angular/common/http';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { ListaProductosPageModule } from './lista-productos/lista-productos.module';
+import { IpMaquinaPageModule } from './ip-maquina/ip-maquina.module';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @NgModule({
@@ -23,7 +24,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
     HttpClientModule,
     IonicStorageModule.forRoot(),
     AppRoutingModule,
-    ListaProductosPageModule
+    ListaProductosPageModule,
+    IpMaquinaPageModule
   ],
   providers: [
     StatusBar,

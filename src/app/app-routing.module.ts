@@ -6,6 +6,7 @@ const routes: Routes = [
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },  { path: 'modificar-inventario', loadChildren: './modificar-inventario/modificar-inventario.module#ModificarInventarioPageModule' },
   { path: 'lista-productos', loadChildren: './lista-productos/lista-productos.module#ListaProductosPageModule' },
+  { path: 'ip-maquina', loadChildren: './ip-maquina/ip-maquina.module#IpMaquinaPageModule' },
 
 ];
 

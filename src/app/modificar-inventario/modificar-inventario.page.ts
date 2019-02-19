@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, LoadingController } from '@ionic/angular';
+import { ModalController, LoadingController, AlertController } from '@ionic/angular';
 import { ListaProductosPage } from '../lista-productos/lista-productos.page';
 import { OverlayEventDetail } from '@ionic/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { isNull } from 'util';
+import { Storage } from '@ionic/storage';
+import { Router } from '@angular/router';
+import { IpMaquinaPage } from '../ip-maquina/ip-maquina.page';
 
 @Component({
   selector: 'app-modificar-inventario',
@@ -19,19 +23,72 @@ Existencia: '';
 Venta:'';
 cantidad:'';
 productos:any=[];
+ipServidor: any;
 
   constructor(
     public modalCtrl: ModalController,
     public http: HttpClient,
     public toastCtrl: ToastController,
     public loadingCtrl: LoadingController,
-    public barcodeScanner: BarcodeScanner
+    public barcodeScanner: BarcodeScanner,
+    public storage: Storage,
+    public router: Router,
+    public alertCtrl: AlertController
   ) { }
 
   ngOnInit() {
-    this.getData()
+    this.verificaUsuario()
+    this.getIp();
   }  
   
+  verificaUsuario(){
+    this.storage.get('usuario').then((data)=>{
+      if(isNull(data)){
+       this.router.navigateByUrl('login');
+      }
+     })
+  }
+
+  getIp(){
+    this.storage.get('ipServidor').then((data)=>{
+      if(data != undefined){
+        this.ipServidor = data;
+         this.getData();
+      }else{
+        this.presentAlert();
+      }      
+    });
+  }
+
+  async presentAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Error',
+      subHeader: 'IP de Servidor No asiganada',
+      message: 'Debe Configurar la ip del servidor.',
+      buttons: [{
+        text:'Aceptar', 
+        handler: () => {
+          this.configuraIp();
+       }
+      }]
+    });
+
+    await alert.present();
+  }
+
+  async configuraIp(){
+    const modal: HTMLIonModalElement =
+    await this.modalCtrl.create({
+        component: IpMaquinaPage,
+        componentProps: {
+          aParameter: true,
+          otherParameter: true
+        }
+    });
+    await modal.present();
+  }
+  
+
   async presentLoading() {
     const loading = await this.loadingCtrl.create({
       message: 'Cargando',
@@ -41,7 +98,7 @@ productos:any=[];
   }
 
   getData(){
-    this.http.get('http://localhost/firebird/ObtieneProductos.php',{}).subscribe(data => {
+    this.http.get('http://'+ this.ipServidor +'/firebird/ObtieneProductos.php',{}).subscribe(data => {
       var prod ;
       prod = data;
       prod.forEach(element => {
@@ -58,7 +115,7 @@ productos:any=[];
     if(this.codigoMostrar != null && this.cantidad != null){
       this.presentLoading();
       let data = new HttpParams().append('codigo', this.codigoMostrar).append('cant',this.cantidad).append('dataType', 'application/json; charset=utf-8');
-      this.http.get('http://localhost/firebird/ActualizaInventario.php',{params: data}).subscribe(data=>{
+      this.http.get('http://'+ this.ipServidor +'/firebird/ActualizaInventario.php',{params: data}).subscribe(data=>{
         if(data != null){
           var res : any;
           res = data;
