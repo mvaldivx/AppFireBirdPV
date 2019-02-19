@@ -1,5 +1,10 @@
+ion-toolbar{
+    background-color: #8099c5;
+    color:white;
+  }
 .filtros{
     width:100%;
+    height:20%;
     ion-item{
         display:inline-block;
         margin-left:20px;
@@ -11,3 +16,55 @@
         width:45%;
     }
 }
+ion-content{
+    width:100%;
+    height:100%;
+}
+.Productos{
+    width:100%;
+    height:80%;
+}
+.wrapper{
+    height:100%;
+    grid-gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+   grid-auto-rows: minmax(15px, auto);
+
+}
+.listProd[scrolly=true], div[scrolly=true] {
+    position: relative;
+    overflow: hidden;
+    ::-webkit-scrollbar {
+        display: none;
+      }
+}
+.listProd[scrollx=true] {
+    overflow-x: auto;
+  }
+  
+.listProd[scrolly=true] {
+    overflow-y: auto;
+  }
+.blue{background-color: #84a0cf86;}
+.box {
+    border-radius: 5px;
+    padding: .2em;
+    margin-left: 2px;
+    margin-right: 2px;
+    
+ 
+    h2 {
+       font-weight: bold;
+   }
+ }
+ .wrapper > * {
+    margin-bottom: 2px;
+  }
+  @supports (display: grid) {
+    .wrapper > * {
+      margin: 0;
+    }
+  }
+  

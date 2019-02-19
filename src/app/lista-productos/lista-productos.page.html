@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="rise">
     <ion-buttons slot="secondary">
         <ion-button color="secondary" (click)="closeModal()">
           <ion-icon slot="icon-only" name="close"></ion-icon>
@@ -22,36 +22,39 @@
       </ion-item>
   </div>
 
-  <div>
-    <ion-grid>
-      <ion-row>
-          <ion-col>
-            Codigo
-          </ion-col>
-          <ion-col>
-            Descripcion
-          </ion-col>
-          <ion-col>
-            Existencia
-          </ion-col>
-          <ion-col>
-            Costo
-          </ion-col>
-      </ion-row>
-      <ion-row *ngFor="let prod of productos" (click)="productoSeleccionado(prod.codigo)" >
-        <ion-col>
-          {{prod.codigo}} , {{prod.Visible}}
-        </ion-col>
-        <ion-col>
-          {{prod.Descripcion}}
-        </ion-col>
-        <ion-col>
-          {{prod.Existencia}}
-        </ion-col>
-        <ion-col>
-          {{prod.Costo}}
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+  <div  class="Productos ">
+      <ion-grid class="wrapper">
+        <ion-row class="box blue" >
+            <ion-col>
+              Codigo
+            </ion-col>
+            <ion-col size="6">
+              Descripcion
+            </ion-col>
+            <ion-col>
+              Existencia
+            </ion-col>
+            <ion-col>
+              Costo
+            </ion-col>
+        </ion-row>
+        <div scrollY="true" class="listProd">
+            <ion-row  *ngFor="let prod of productosShow" (click)="productoSeleccionado(prod)"  class="box">
+                <ion-col>
+                  {{prod.codigo}}
+                </ion-col>
+                <ion-col size="6">
+                  {{prod.Descripcion}}
+                </ion-col>
+                <ion-col>
+                  {{prod.Existencia}}
+                </ion-col>
+                <ion-col>
+                  {{prod.Costo}}
+                </ion-col>
+              </ion-row>
+        </div>
+        
+      </ion-grid>
   </div>
 </ion-content>

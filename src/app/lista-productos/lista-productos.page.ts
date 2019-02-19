@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { HttpClient } from '@angular/common/http';
+import { ModalController, NavParams } from '@ionic/angular';
 
 @Component({
   selector: 'app-lista-productos',
@@ -15,60 +14,57 @@ fDescripcion:'';
 
   constructor(
     public modalCtrl: ModalController,
-    public http: HttpClient
+    public navParams: NavParams
   ) { }
 
   ngOnInit() {
-    this.getData();
+    this.productos = this.navParams.get('otherParameter')
+    this.productosShow = this.navParams.get('otherParameter')
   }
 
   closeModal(){
     this.modalCtrl.dismiss({codigo:''});
   }
 
-  getData(){
-    this.http.get('http://localhost:55688/api/Productos/GetProductos',{}).subscribe(data => {
-      var prod ;
-      prod = data;
-      console.log(prod);
-      prod.forEach(element => {
-        this.productos.push({id:element.id, 
-                            codigo: element.codigo, 
-                            Descripcion: element.Descripcion, 
-                            Existencia: element.Existencia, 
-                            Costo: element.Costo, 
-                            Visible: true})
-      });
-      this.productosShow = this.productos;
-    })
-  }
 
-  productoSeleccionado(codigo){
-    this.modalCtrl.dismiss({codigo:codigo});
+  productoSeleccionado(p){
+    this.modalCtrl.dismiss({codigo:p.codigo,Descripcion:p.Descripcion, Existencia: p.Existencia, Costo: p.Costo});
   }
 
   filtrando(tipo){
-    if(tipo === 0){
-      this.fDescripcion= '';
-    }else{
-      this.fCodigo='';
-    }
-    if(this.fCodigo.length > 0 || this.fDescripcion.length > 0){
-      this.productos.forEach(element => {
-        var cadena='';
+
+    if((this.fCodigo.length > 0 && tipo === 0 )|| (this.fDescripcion.length > 0 && tipo === 1)){
+      if(tipo === 0){
+        this.fDescripcion= '';
+      }else{
+        this.fCodigo='';
+      }
+
+      this.productosShow =[];
+      var cadena='';
         if(tipo === 0){
           cadena = this.fCodigo;
         }else{
           cadena = this.fDescripcion;
         }
-        if(element.codigo.length >= cadena.length){
-          if(element.codigo.substring(0,cadena.length) == cadena){
-            element.Visible = true;
-          }else{
-            element.Visible = false;
+
+      this.productos.forEach(element => {
+        if(tipo === 0){
+          if(element.codigo.length >= cadena.length){
+            if(element.codigo.substring(0,cadena.length).toUpperCase() == cadena.toUpperCase()){
+              this.productosShow.push(element)
+            }
+          }
+        }else{
+          if(element.Descripcion.length >= cadena.length){
+            if(element.Descripcion.substring(0,cadena.length).toUpperCase() == cadena.toUpperCase()){
+              this.productosShow.push(element)
+            }
           }
         }
       });
+    }else{
+      this.productosShow = this.productos;
     }
     
   }
