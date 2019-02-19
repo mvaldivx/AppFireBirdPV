@@ -29,7 +29,7 @@ productos:any=[];
   }  
   
   getData(){
-    this.http.get('http://172.16.214.54/firebird/ObtieneProductos.php',{}).subscribe(data => {
+    this.http.get('http://localhost:8080/firebird/ObtieneProductos.php',{}).subscribe(data => {
       var prod ;
       prod = data;
       prod.forEach(element => {

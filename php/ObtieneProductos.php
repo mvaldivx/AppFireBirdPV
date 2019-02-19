@@ -13,8 +13,10 @@ $data = array();
             $datos = array(
             "codigo" => $rows -> CODIGO,
             "Descripcion" => $rows -> DESCRIPCION,
-            "Existencia" => $rows -> EXISTENCIA,
-            "Costo" => $rows -> COSTO
+            "Existencia" => $rows -> DINVENTARIO,
+            "Costo" => $rows -> PCOSTO,
+            "Venta" => $rows -> PVENTA,
+            "UMedida" => $rows -> UMEDIDA
             );
         $data[] = $datos;
         }

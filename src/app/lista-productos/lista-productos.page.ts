@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-lista-productos',
@@ -14,7 +15,8 @@ fDescripcion:'';
 
   constructor(
     public modalCtrl: ModalController,
-    public navParams: NavParams
+    public navParams: NavParams,
+    public http: HttpClient
   ) { }
 
   ngOnInit() {
@@ -29,6 +31,37 @@ fDescripcion:'';
 
   productoSeleccionado(p){
     this.modalCtrl.dismiss({codigo:p.codigo,Descripcion:p.Descripcion, Existencia: p.Existencia, Costo: p.Costo});
+  }
+
+  filtrar(tipo){
+
+    if((this.fCodigo.length > 0 && tipo === 0 )|| (this.fDescripcion.length > 0 && tipo === 1)){
+      if(tipo === 0){
+        this.fDescripcion= '';
+      }else{
+        this.fCodigo='';
+      }
+      this.productosShow =[];
+      var cadena ="";
+      if(tipo === 0){
+        cadena = this.fCodigo.toUpperCase();
+      }else{
+        cadena = this.fDescripcion.toUpperCase();
+      }
+      let data = new HttpParams().append('tipo', tipo).append('cadena',cadena).append('dataType', 'application/json; charset=utf-8');
+      //data.append('cadena',cadena);
+      this.http.get('http://localhost:8080/firebird/ProductosFiltrados.php',{params:data}).subscribe(data => {
+        var prod ;
+        prod = data;
+        prod.forEach(element => {
+          this.productosShow.push({id:element.id, 
+                              codigo: element.codigo, 
+                              Descripcion: element.Descripcion, 
+                              Existencia: element.Existencia, 
+                              Costo: element.Costo})
+        });
+      })
+    }
   }
 
   filtrando(tipo){

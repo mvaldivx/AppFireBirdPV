@@ -1,5 +1,5 @@
 <?php
-$db = 'C:\Users\mavaldivia\Documents\Ionic\TEST.FDB';
+$db = 'C:\Program Files (x86)\AbarrotesMultiCaja\db\restaurado.fdb';
 $username= 'SYSDBA';
 $password = 'masterkey';
 
