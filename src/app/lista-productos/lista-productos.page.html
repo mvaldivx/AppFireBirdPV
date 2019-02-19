@@ -24,33 +24,33 @@
 
   <div  class="Productos ">
       <ion-grid class="wrapper">
-        <ion-row class="box blue" >
-            <ion-col>
+        <ion-row class="box blue headTab" >
+            <ion-col size="3" align-self-center size-sm>
               Codigo
             </ion-col>
-            <ion-col size="6">
+            <ion-col size="6" align-self-center size-sm>
               Descripcion
             </ion-col>
-            <ion-col>
+            <ion-col align-self-center size-sm>
               Existencia
             </ion-col>
-            <ion-col>
+            <ion-col align-self-center size-sm>
               Costo
             </ion-col>
         </ion-row>
         <div scrollY="true" class="listProd">
             <ion-row  *ngFor="let prod of productosShow" (click)="productoSeleccionado(prod)"  class="box">
-                <ion-col>
+                <ion-col size="4" align-self-start size-sm>
                   {{prod.codigo}}
                 </ion-col>
-                <ion-col size="6">
+                <ion-col size="6" align-self-start size-sm>
                   {{prod.Descripcion}}
                 </ion-col>
-                <ion-col>
+                <ion-col align-self-start size-sm>
                   {{prod.Existencia}}
                 </ion-col>
-                <ion-col>
-                  {{prod.Costo}}
+                <ion-col align-self-start size-sm>
+                  {{prod.Venta}}
                 </ion-col>
               </ion-row>
         </div>

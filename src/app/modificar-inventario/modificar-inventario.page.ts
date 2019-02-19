@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController } from '@ionic/angular';
 import { ListaProductosPage } from '../lista-productos/lista-productos.page';
 import { OverlayEventDetail } from '@ionic/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
   selector: 'app-modificar-inventario',
@@ -15,21 +16,32 @@ codigo:'';
 codigoMostrar:'';
 Descripcion: '';
 Existencia: '';
-Costo:'';
+Venta:'';
+cantidad:'';
 productos:any=[];
 
   constructor(
     public modalCtrl: ModalController,
     public http: HttpClient,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    public loadingCtrl: LoadingController,
+    public barcodeScanner: BarcodeScanner
   ) { }
 
   ngOnInit() {
     this.getData()
   }  
   
+  async presentLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Cargando',
+      duration: 1000
+    });
+    await loading.present();
+  }
+
   getData(){
-    this.http.get('http://localhost:8080/firebird/ObtieneProductos.php',{}).subscribe(data => {
+    this.http.get('http://localhost/firebird/ObtieneProductos.php',{}).subscribe(data => {
       var prod ;
       prod = data;
       prod.forEach(element => {
@@ -37,9 +49,32 @@ productos:any=[];
                             codigo: element.codigo, 
                             Descripcion: element.Descripcion, 
                             Existencia: element.Existencia, 
-                            Costo: element.Costo})
+                            Venta: element.Venta})
       });
     })
+  }
+
+ UpdateProd(){
+    if(this.codigoMostrar != null && this.cantidad != null){
+      this.presentLoading();
+      let data = new HttpParams().append('codigo', this.codigoMostrar).append('cant',this.cantidad).append('dataType', 'application/json; charset=utf-8');
+      this.http.get('http://localhost/firebird/ActualizaInventario.php',{params: data}).subscribe(data=>{
+        if(data != null){
+          var res : any;
+          res = data;
+          this.presentToast(res.respuesta)
+          this.codigo= '';
+          this.codigoMostrar= '';
+          this.Descripcion = undefined;
+          this.Existencia = '';
+          this.Venta = '';
+          this.cantidad = '';
+          this.getData();
+        }else{
+          this.presentToast("Ocurrio un error")
+        }
+      })
+    }
   }
 
   async presentToast(mensaje) {
@@ -51,12 +86,13 @@ productos:any=[];
   }
 
   async openModal() {
+    this.presentLoading()
     const modal: HTMLIonModalElement =
        await this.modalCtrl.create({
           component: ListaProductosPage,
           componentProps: {
              aParameter: true,
-             otherParameter: this.productos
+             otherParameter: true
           }
     });
      
@@ -66,7 +102,7 @@ productos:any=[];
         this.codigoMostrar= detail.data.codigo;
         this.Descripcion = detail.data.Descripcion;
         this.Existencia = detail.data.Existencia;
-        this.Costo = detail.data.Costo;
+        this.Venta = detail.data.Venta;
        }
     });
     
@@ -91,7 +127,7 @@ productos:any=[];
               this.Descripcion = element.Descripcion;
               this.codigoMostrar = element.codigo;
               this.Existencia = element.Existencia;
-              this.Costo = element.Costo;
+              this.Venta = element.Venta;
               encontrado = true;
             }
           }
@@ -101,5 +137,13 @@ productos:any=[];
         }
       }
     }
+  }
+
+  EscanearCodigo(){
+    this.barcodeScanner.scan().then(barcodeData => {
+        alert('Barcode data: ' +  barcodeData);
+     }).catch(err => {
+         alert('Error: ' +  err);
+     });
   }
 }

@@ -12,6 +12,7 @@ import { HttpClientModule } from  '@angular/common/http';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { ListaProductosPageModule } from './lista-productos/lista-productos.module';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +28,7 @@ import { ListaProductosPageModule } from './lista-productos/lista-productos.modu
   providers: [
     StatusBar,
     SplashScreen,
+    BarcodeScanner,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
