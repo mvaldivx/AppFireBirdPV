@@ -143,6 +143,10 @@ ipServidor: any;
         })
       }
       
+    }else{
+      this.productosShow = this.productos.filter((item)=>{
+        return item.codigo.toUpperCase().indexOf(this.fCodigo.toUpperCase()) > -1;
+      })
     }
   }
 
