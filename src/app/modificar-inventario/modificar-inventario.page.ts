@@ -25,6 +25,7 @@ Venta:'';
 cantidad:'';
 productos:any=[];
 ipServidor: any;
+IdUsuario:any;
 
   constructor(
     public modalCtrl: ModalController,
@@ -46,6 +47,8 @@ ipServidor: any;
     this.storage.get('usuario').then((data)=>{
       if(isNull(data)){
        this.router.navigateByUrl('login');
+      }else{
+        this.IdUsuario = data.id;
       }
      })
   }
@@ -115,7 +118,12 @@ ipServidor: any;
  UpdateProd(){
     if(this.codigoMostrar != null && this.cantidad != null){
       this.presentLoading();
-      let data = new HttpParams().append('codigo', this.codigoMostrar).append('cant',this.cantidad).append('id', this.id).append('dataType', 'application/json; charset=utf-8');
+      let data = new HttpParams().append('codigo', this.codigoMostrar)
+      .append('cant',this.cantidad)
+      .append('id', this.id)
+      .append('venta', this.Venta)
+      .append('IdUsuario', this.IdUsuario)
+      .append('dataType', 'application/json; charset=utf-8');
       this.http.get('http://'+ this.ipServidor +'/firebird/ActualizaInventario.php',{params: data}).subscribe(data=>{
         if(data != null){
           var res : any;
