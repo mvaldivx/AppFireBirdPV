@@ -9,6 +9,7 @@ import { isNull } from 'util';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
 import { IpMaquinaPage } from '../ip-maquina/ip-maquina.page';
+import { resolve } from 'url';
 
 @Component({
   selector: 'app-modificar-inventario',
@@ -110,10 +111,6 @@ IdUsuario:any;
       .append('IdUsuario', this.IdUsuario)
       .append('dataType', 'application/json; charset=utf-8');
       this.http.get('http://'+ this.ipServidor +'/firebird/ActualizaInventario.php',{params: data}).subscribe(data=>{
-        if(data != null){
-          var res : any;
-          res = data;
-          this.presentToast(res.respuesta)
           this.id='';
           this.codigo= '';
           this.codigoMostrar= '';
@@ -121,13 +118,11 @@ IdUsuario:any;
           this.Existencia = '';
           this.Venta = '';
           this.cantidad = '';
-        }else{
-          this.presentToast("Ocurrio un error")
-        }
-      })
+          this.presentToast('Producto Registrado Exitosamente');
+      },(err) =>{this.presentToast('Ocurrio un error : ' + JSON.stringify(err))})
     }
   }
-
+//this.presentToast('Ocurrio un error : ' + JSON.stringify(err));
   async presentToast(mensaje) {
     const toast = await this.toastCtrl.create({
       message: mensaje,
@@ -171,25 +166,29 @@ IdUsuario:any;
   BuscaCodigo(){
     if(this.codigo != undefined){
       if(this.codigo.length > 0){
-        var encontrado= false;
-        let data = new HttpParams().append('tipo', '0').append('cadena',this.codigo).append('dataType', 'application/json; charset=utf-8');
+        var encontrado:boolean= false;
+        this.codigo = this.codigo.toUpperCase();
+        let data = new HttpParams().append('tipo', '0').append('cadena',this.codigo.toUpperCase()).append('dataType', 'application/json; charset=utf-8');
         //data.append('cadena',cadena);
         
         this.http.get('http://'+ this.ipServidor +'/firebird/ProductosFiltrados.php',{params:data}).subscribe(data => {
           var prod ;
           prod = data;
-          prod.forEach(element => {
-            this.productos.push({id:element.id, 
-                                codigo: element.codigo, 
-                                Descripcion: element.Descripcion, 
-                                Existencia: element.Existencia, 
-                                Venta: element.Venta})
-          });
-        });
-
-          if(!encontrado){
+          if(prod.length > 0){
+            prod.forEach(element => {
+              this.id = element.id; 
+              this.codigoMostrar = element.codigo; 
+              this.Descripcion = element.Descripcion; 
+              this.Existencia = element.Existencia;
+              this.Venta = element.Venta;
+              encontrado = true;
+            });
+            
+          }else{
             this.presentToast('Producto no encontrado');
           }
+          
+        },(err) =>{this.presentToast('Ocurrio un error');});
       }
     }
   }

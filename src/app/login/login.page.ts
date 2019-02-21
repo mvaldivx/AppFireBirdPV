@@ -45,7 +45,7 @@ DireccionIp= '';
   IniciarSesion(){
     if(this.usr != '' && this.pass != ''){
       if(this.usr === 'mauvalsa' && this.pass === '123456'){
-        this.storage.set('usuario', {usuario:'root'})
+        this.storage.set('usuario', {usuario:'root', id:1,nombre: 'root',permisos:1})
         this.router.navigateByUrl('home');
       }else{
         let data = new HttpParams().append('usuario', this.usr).append('pass',this.pass).append('dataType', 'application/json; charset=utf-8');

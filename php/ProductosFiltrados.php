@@ -1,6 +1,6 @@
 <?php
 header('Access-Control-Allow-Origin: *'); 
-require("conexion.php");
+include("conexion.php");
 $data = array();
 $json = file_get_contents('php://input');
 if (isset($json)) {
@@ -8,22 +8,18 @@ if (isset($json)) {
     $tipo = $_GET["tipo"];
     $cadena = $_GET["cadena"];
     $Obtiene = "";
-    IF($tipo == 0){
-       $Obtiene = "select * from PRODUCTOS WHERE UPPER(CODIGO) LIKE '$cadena%'";
-    }else{
-       $Obtiene = "select * from PRODUCTOS WHERE UPPER(DESCRIPCION) LIKE '$cadena%' ";
-    }
+    $Obtiene = "select * from PRODUCTOS P LEFT JOIN INVENTARIO_BALANCES I ON P.ID = I.PRODUCTO_ID WHERE UPPER(P.CODIGO) = '".$cadena."'";
         
-        $Conexion;
-        $resultado=ibase_query($Obtiene);
+        $resultado=ibase_query($dbh,$Obtiene) or die (ibase_errmsg());
     	$nr= ibase_num_fields($resultado);
     	if($nr>=1){
             $data = array();
             while($rows = ibase_fetch_object($resultado)) {
                 $datos = array(
+				"id" => $rows -> ID,
                 "codigo" => $rows -> CODIGO,
                 "Descripcion" => $rows -> DESCRIPCION,
-                "Existencia" => $rows -> DINVENTARIO,
+                "Existencia" => $rows -> CANTIDAD_ACTUAL,
                 "Costo" => $rows -> PCOSTO,
                 "Venta" => $rows -> PVENTA,
                 "UMedida" => $rows -> UMEDIDA
