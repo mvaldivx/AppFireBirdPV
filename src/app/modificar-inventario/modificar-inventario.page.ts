@@ -16,7 +16,7 @@ import { IpMaquinaPage } from '../ip-maquina/ip-maquina.page';
   styleUrls: ['./modificar-inventario.page.scss'],
 })
 export class ModificarInventarioPage implements OnInit {
-codigo:'';
+codigo:any ='';
 codigoMostrar:'';
 Descripcion: '';
 Existencia: '';
@@ -198,7 +198,9 @@ ipServidor: any;
 
   EscanearCodigo(){
     this.barcodeScanner.scan().then(barcodeData => {
-        alert('Barcode data: ' +  barcodeData);
+      this.codigo = barcodeData.text.toString();
+      this.BuscaCodigo();
+        //alert(JSON.stringify(barcodeData));
      }).catch(err => {
          alert('Error: ' +  err);
      });
