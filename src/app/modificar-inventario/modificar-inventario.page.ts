@@ -57,7 +57,6 @@ IdUsuario:any;
     this.storage.get('ipServidor').then((data)=>{
       if(data != undefined){
         this.ipServidor = data;
-         this.getData();
       }else{
         this.presentAlert();
       }      
@@ -101,20 +100,6 @@ IdUsuario:any;
     await loading.present();
   }
 
-  getData(){
-    this.http.get('http://'+ this.ipServidor +'/firebird/ObtieneProductos.php',{}).subscribe(data => {
-      var prod ;
-      prod = data;
-      prod.forEach(element => {
-        this.productos.push({id:element.id, 
-                            codigo: element.codigo, 
-                            Descripcion: element.Descripcion, 
-                            Existencia: element.Existencia, 
-                            Venta: element.Venta})
-      });
-    })
-  }
-
  UpdateProd(){
     if(this.codigoMostrar != null && this.cantidad != null){
       this.presentLoading();
@@ -136,7 +121,6 @@ IdUsuario:any;
           this.Existencia = '';
           this.Venta = '';
           this.cantidad = '';
-          this.getData();
         }else{
           this.presentToast("Ocurrio un error")
         }
@@ -188,21 +172,24 @@ IdUsuario:any;
     if(this.codigo != undefined){
       if(this.codigo.length > 0){
         var encontrado= false;
-        this.productos.forEach(element => {
-          if(this.codigo.length === element.codigo.length){
-            if(this.codigo.toUpperCase() === element.codigo.toUpperCase()){
-              this.id = element.id;
-              this.Descripcion = element.Descripcion;
-              this.codigoMostrar = element.codigo;
-              this.Existencia = element.Existencia;
-              this.Venta = element.Venta;
-              encontrado = true;
-            }
-          }
+        let data = new HttpParams().append('tipo', '0').append('cadena',this.codigo).append('dataType', 'application/json; charset=utf-8');
+        //data.append('cadena',cadena);
+        
+        this.http.get('http://'+ this.ipServidor +'/firebird/ProductosFiltrados.php',{params:data}).subscribe(data => {
+          var prod ;
+          prod = data;
+          prod.forEach(element => {
+            this.productos.push({id:element.id, 
+                                codigo: element.codigo, 
+                                Descripcion: element.Descripcion, 
+                                Existencia: element.Existencia, 
+                                Venta: element.Venta})
+          });
         });
-        if(!encontrado){
-          this.presentToast('Producto no encontrado');
-        }
+
+          if(!encontrado){
+            this.presentToast('Producto no encontrado');
+          }
       }
     }
   }

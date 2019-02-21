@@ -93,17 +93,60 @@ ipServidor: any;
         var prod ;
         prod = data;
         prod.forEach(element => {
-          this.productosShow.push({id:element.id, 
+          this.productos.push({id:element.id, 
                               codigo: element.codigo, 
                               Descripcion: element.Descripcion, 
                               Existencia: element.Existencia, 
                               Venta: element.Venta})
+        this.productosShow = this.productos;
         });
       })
      }
   }
 
-  filtrar(tipo){
+  FilterData(tipo){
+    var continuar: boolean = false;
+    if(tipo===0){
+      if(this.fCodigo != undefined){
+        if(this.fCodigo.length >0){
+          continuar = true;
+        }
+      }
+    }else{
+      if(this.fDescripcion != undefined){
+        if(this.fDescripcion.length >0){
+          continuar = true;
+        }
+      }
+    }
+    if(continuar){
+      if(tipo === 0){
+        this.fDescripcion= '';
+      }else{
+        this.fCodigo='';
+      }
+      this.productosShow =[];
+      var cadena ="";
+      if(tipo === 0){
+        cadena = this.fCodigo.toUpperCase();
+      }else{
+        cadena = this.fDescripcion.toUpperCase();
+      }
+
+      if(tipo===0){
+        this.productosShow = this.productos.filter((item)=>{
+          return item.codigo.toUpperCase().indexOf(this.fCodigo.toUpperCase()) > -1;
+        })
+      }else{
+        this.productosShow = this.productos.filter((item)=>{
+          return item.Descripcion.toUpperCase().indexOf(this.fDescripcion.toUpperCase()) > -1;
+        })
+      }
+      
+    }
+  }
+
+  /*filtrar(tipo){
 
     if((this.fCodigo.length > 0 && tipo === 0 )|| (this.fDescripcion.length > 0 && tipo === 1)){
       if(tipo === 0){
@@ -140,6 +183,6 @@ ipServidor: any;
         this.filtrado = false;
       }
     }
-  }
+  }*/
 
 }
