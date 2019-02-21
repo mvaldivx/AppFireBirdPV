@@ -18,6 +18,7 @@ import { IpMaquinaPage } from '../ip-maquina/ip-maquina.page';
 export class ModificarInventarioPage implements OnInit {
 codigo:any ='';
 codigoMostrar:'';
+id:'';
 Descripcion: '';
 Existencia: '';
 Venta:'';
@@ -114,12 +115,13 @@ ipServidor: any;
  UpdateProd(){
     if(this.codigoMostrar != null && this.cantidad != null){
       this.presentLoading();
-      let data = new HttpParams().append('codigo', this.codigoMostrar).append('cant',this.cantidad).append('dataType', 'application/json; charset=utf-8');
+      let data = new HttpParams().append('codigo', this.codigoMostrar).append('cant',this.cantidad).append('id', this.id).append('dataType', 'application/json; charset=utf-8');
       this.http.get('http://'+ this.ipServidor +'/firebird/ActualizaInventario.php',{params: data}).subscribe(data=>{
         if(data != null){
           var res : any;
           res = data;
           this.presentToast(res.respuesta)
+          this.id='';
           this.codigo= '';
           this.codigoMostrar= '';
           this.Descripcion = undefined;
@@ -181,6 +183,7 @@ ipServidor: any;
         this.productos.forEach(element => {
           if(this.codigo.length === element.codigo.length){
             if(this.codigo.toUpperCase() === element.codigo.toUpperCase()){
+              this.id = element.id;
               this.Descripcion = element.Descripcion;
               this.codigoMostrar = element.codigo;
               this.Existencia = element.Existencia;
