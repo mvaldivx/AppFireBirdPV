@@ -87,9 +87,9 @@ export class ReporteMovimientosPage implements OnInit {
     var mes= (date.getMonth() + 1);
     var anio= date.getFullYear();
     let data = new HttpParams()
-    .append('dia',dia)
-    .append('mes', mes)
-    .append('anio', anio)
+    .append('dia',dia.toString())
+    .append('mes', mes.toString())
+    .append('anio', anio.toString())
     .append('IdUsuario', this.IdUsuario)
     .append('dataType', 'application/json; charset=utf-8');
     this.http.get('http://'+ this.ipServidor +'/firebird/ObtieneMovimientos.php',{params: data}).subscribe(data=>{
@@ -97,9 +97,14 @@ export class ReporteMovimientosPage implements OnInit {
      mov = data;  
      this.Movimientos =[];
      mov.forEach(element => {
-       this.Movimientos.push(element)
+       var hora = new Date(element.Fecha);
+       var horas= (hora.getHours() > 12) ? (hora.getHours() % 12 ) : hora.getHours();
+       var t = (hora.getHours() > 12) ? ' PM' : ' AM';
+       var horaShow= horas + ':' + hora.getMinutes() + t;
+
+       this.Movimientos.push({Hora: horaShow, Descripcion: element.Descripcion, Movimiento: element.Movimiento, 
+            Habia: element.Habia, Tipo: element.Tipo, Cantidad: element.Cantidad, Hay: (element.Habia + element.Cantidad),Cajero: element.Cajero })
      });   
-    console.log(JSON.stringify(data));
     },(err) =>{console.log('Ocurrio un error : ' + JSON.stringify(err))})
 
   }

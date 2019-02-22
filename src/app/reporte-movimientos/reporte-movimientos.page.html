@@ -53,8 +53,9 @@
                     {{mov.Habia}}
                   </ion-col>
                   <ion-col align-self-start size-sm>
-                    {{mov.Tipo}}
-                  </ion-col>
+                      <ion-button *ngIf="mov.Tipo === '1'" shape="round" color="success" class="tipo" size="small"><ion-icon name="arrow-dropleft"></ion-icon>Entrada</ion-button>
+                      <ion-button *ngIf="mov.Tipo != '1'" shape="round" color="primary" class="tipo" size="small"><ion-icon name="arrow-dropright"></ion-icon>Salida</ion-button>
+                 </ion-col>
                   <ion-col align-self-start size-sm>
                     {{mov.Cantidad}}
                   </ion-col>
