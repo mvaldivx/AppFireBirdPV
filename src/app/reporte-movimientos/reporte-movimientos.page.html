@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar color="rise">
+      <ion-buttons slot="secondary">
+          <ion-button color="secondary" (click)="close()">
+            <ion-icon slot="icon-only" name="close"></ion-icon>
+          </ion-button>
+      </ion-buttons>
+    <ion-title>Reporte de Movimientos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <div  class="Productos ">
+        <ion-grid class="wrapper">
+          <ion-row class="box blue headTab" >
+              <ion-col size="3" align-self-center size-sm>
+                Hora
+              </ion-col>
+              <ion-col size="5" align-self-center size-sm>
+                Descripcion
+              </ion-col>
+              <ion-col align-self-center size-sm>
+                Movimiento
+              </ion-col>
+              <ion-col align-self-center size-sm>
+                Habia
+              </ion-col>
+              <ion-col align-self-center size-sm>
+                Tipo
+              </ion-col>
+              <ion-col align-self-center size-sm>
+                Cantidad
+              </ion-col>
+              <ion-col align-self-center size-sm>
+                  Hay
+              </ion-col>
+              <ion-col align-self-center size-sm>
+                Cajero
+              </ion-col>
+          </ion-row>
+          <div scrollY="true" class="listProd">
+              <ion-row  *ngFor="let mov of Movimientos" class="box">
+                  <ion-col size="4" align-self-start size-sm>
+                    {{mov.Hora}}
+                  </ion-col>
+                  <ion-col size="5" align-self-start size-sm>
+                    {{mov.Descripcion}}
+                  </ion-col>
+                  <ion-col align-self-start size-sm>
+                    {{mov.Movimiento}}
+                  </ion-col>
+                  <ion-col align-self-start size-sm>
+                    {{mov.Habia}}
+                  </ion-col>
+                  <ion-col align-self-start size-sm>
+                    {{mov.Tipo}}
+                  </ion-col>
+                  <ion-col align-self-start size-sm>
+                    {{mov.Cantidad}}
+                  </ion-col>
+                  <ion-col align-self-start size-sm>
+                    {{mov.Hay}}
+                  </ion-col>
+                  <ion-col align-self-start size-sm>
+                    {{mov.Cajero}}
+                  </ion-col>
+                </ion-row>
+          </div>
+          
+        </ion-grid>
+    </div>
+</ion-content>

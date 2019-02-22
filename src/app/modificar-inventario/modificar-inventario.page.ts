@@ -9,7 +9,6 @@ import { isNull } from 'util';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
 import { IpMaquinaPage } from '../ip-maquina/ip-maquina.page';
-import { resolve } from 'url';
 
 @Component({
   selector: 'app-modificar-inventario',
@@ -41,7 +40,7 @@ IdUsuario:any;
 
   ngOnInit() {
     this.verificaUsuario()
-    this.getIp();
+    
   }  
   
   verificaUsuario(){
@@ -50,6 +49,7 @@ IdUsuario:any;
        this.router.navigateByUrl('login');
       }else{
         this.IdUsuario = data.id;
+        this.getIp();
       }
      })
   }
@@ -139,11 +139,12 @@ IdUsuario:any;
           componentProps: {
              aParameter: true,
              otherParameter: true
-          }
+          },
+          cssClass: "modalProductos"
     });
      
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-       if (detail !== null) {
+       if (detail !== null) { 
         this.codigo= detail.data.codigo;
         this.codigoMostrar= detail.data.codigo;
         this.Descripcion = detail.data.Descripcion;

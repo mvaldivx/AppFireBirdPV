@@ -1,0 +1,61 @@
+ion-toolbar{
+    background-color: #8099c5;
+    color:white;
+  }
+
+  ion-content{
+    width:100%;
+    height:100%;
+}
+.Productos{
+    width:107%;
+    height:80%;
+    margin-left: -15px;
+}
+.wrapper{
+    height:100%;
+    grid-gap: 10px;
+    display: grid;
+   // grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    font-size:.7em;
+   grid-auto-rows: minmax(15px, auto);
+
+}
+.listProd[scrolly=true], div[scrolly=true] {
+    position: relative;
+    overflow: hidden;
+    ::-webkit-scrollbar {
+        display: none;
+      }
+}
+.listProd[scrollx=true] {
+    overflow-x: auto;
+  }
+  
+.listProd[scrolly=true] {
+    overflow-y: auto;
+  }
+.blue{background-color: #84a0cf86;}
+.headTab{
+    max-height:40px !important;
+}
+.box {
+    border-radius: 5px;
+    padding: .2em;
+    margin-left: 2px;
+    margin-right: 2px;
+    max-height:40px;
+ 
+    h2 {
+       font-weight: bold;
+   }
+ }
+ .wrapper > * {
+    margin-bottom: 2px;
+  }
+  @supports (display: grid) {
+    .wrapper > * {
+      margin: 0;
+    }
+  }
+  
