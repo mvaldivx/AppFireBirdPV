@@ -4,6 +4,7 @@ import { isNull } from 'util';
 import { Storage } from '@ionic/storage';
 import { AlertController, ModalController } from '@ionic/angular';
 import { IpMaquinaPage } from '../ip-maquina/ip-maquina.page';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-reporte-movimientos',
@@ -13,12 +14,13 @@ import { IpMaquinaPage } from '../ip-maquina/ip-maquina.page';
 export class ReporteMovimientosPage implements OnInit {
   IdUsuario:any;
   ipServidor: any;
-
+  Movimientos:any[];
   constructor(
     public router: Router,
     public storage : Storage,
     public alertCtrl: AlertController,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public http: HttpClient
   ) { }
 
   ngOnInit() {
@@ -44,6 +46,7 @@ export class ReporteMovimientosPage implements OnInit {
     this.storage.get('ipServidor').then((data)=>{
       if(data != undefined){
         this.ipServidor = data;
+        this.getMovimientos();
       }else{
         this.presentAlert();
       }      
@@ -78,4 +81,26 @@ export class ReporteMovimientosPage implements OnInit {
     await modal.present();
   }
 
+  getMovimientos(){
+    var date = new Date();
+    var dia= date.getDate();
+    var mes= (date.getMonth() + 1);
+    var anio= date.getFullYear();
+    let data = new HttpParams()
+    .append('dia',dia)
+    .append('mes', mes)
+    .append('anio', anio)
+    .append('IdUsuario', this.IdUsuario)
+    .append('dataType', 'application/json; charset=utf-8');
+    this.http.get('http://'+ this.ipServidor +'/firebird/ObtieneMovimientos.php',{params: data}).subscribe(data=>{
+     var mov;
+     mov = data;  
+     this.Movimientos =[];
+     mov.forEach(element => {
+       this.Movimientos.push(element)
+     });   
+    console.log(JSON.stringify(data));
+    },(err) =>{console.log('Ocurrio un error : ' + JSON.stringify(err))})
+
+  }
 }
