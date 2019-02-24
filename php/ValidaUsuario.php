@@ -9,9 +9,7 @@ if (isset($json)) {
     $pass = $_GET["pass"];
     $Obtiene =  "select * from USUARIOS WHERE USUARIO ='$usuario' and CLAVE = '$pass' ";
     
-        
-        $Conexion;
-        $resultado=ibase_query($Obtiene);
+        $resultado=ibase_query($dbh, $Obtiene);
     	$nr= ibase_num_fields($resultado);
     	if($nr>=1){
             $data = array();

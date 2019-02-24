@@ -1,5 +1,7 @@
 <?php
-$db = 'C:\Program Files (x86)\AbarrotesMultiCaja\db\restaurado.fdb';
+
+header("Access-Control-Allow-Origin: *");
+$db = 'C:\Program Files (x86)\AbarrotesMultiCaja\db\PDVDATA.fdb';
 $username= 'SYSDBA';
 $password = 'masterkey';
 

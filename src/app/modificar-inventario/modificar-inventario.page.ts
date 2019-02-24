@@ -145,6 +145,7 @@ IdUsuario:any;
      
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
        if (detail !== null) { 
+        this.id = detail.data.id;
         this.codigo= detail.data.codigo;
         this.codigoMostrar= detail.data.codigo;
         this.Descripcion = detail.data.Descripcion;

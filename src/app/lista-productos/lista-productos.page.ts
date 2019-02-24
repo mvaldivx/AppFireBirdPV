@@ -75,7 +75,7 @@ ipServidor: any;
   }
 
   productoSeleccionado(p){
-    this.modalCtrl.dismiss({codigo:p.codigo,Descripcion:p.Descripcion, Existencia: p.Existencia, Venta: p.Venta});
+    this.modalCtrl.dismiss({id:p.id,codigo:p.codigo,Descripcion:p.Descripcion, Existencia: p.Existencia, Venta: p.Venta});
   }
 
   async presentLoading() {

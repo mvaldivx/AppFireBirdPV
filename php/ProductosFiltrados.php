@@ -8,7 +8,7 @@ if (isset($json)) {
     $tipo = $_GET["tipo"];
     $cadena = $_GET["cadena"];
     $Obtiene = "";
-    $Obtiene = "select * from PRODUCTOS P LEFT JOIN INVENTARIO_BALANCES I ON P.ID = I.PRODUCTO_ID WHERE UPPER(P.CODIGO) = '".$cadena."'";
+    $Obtiene = "select P.ID,P.CODIGO,P.DESCRIPCION,CANTIDAD_ACTUAL,PCOSTO,PVENTA,UMEDIDA from PRODUCTOS P LEFT JOIN INVENTARIO_BALANCES I ON P.ID = I.PRODUCTO_ID WHERE UPPER(P.CODIGO) = '".$cadena."'";
         
         $resultado=ibase_query($dbh,$Obtiene) or die (ibase_errmsg());
     	$nr= ibase_num_fields($resultado);
