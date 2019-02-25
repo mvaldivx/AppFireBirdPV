@@ -17,13 +17,18 @@ if (isset($json)) {
     $cantidad = $_GET["cant"];
     $ObtieneCant = "SELECT CANTIDAD_ACTUAL FROM INVENTARIO_BALANCES WHERE PRODUCTO_ID = $id";
     $res = ibase_query($dbh,$ObtieneCant);
-    $rows = ibase_fetch_object($res);
-    $ActCant = $rows -> CANTIDAD_ACTUAL;
-    if($ActCant > 0){
-        $cantidad = $cantidad + $ActCant;
-    }
-    $nr= ibase_num_fields($res);
+	$nr= 0 ;
+	$ActCant = 0;
+	while ($rows = ibase_fetch_object($res)){
+		$nr+=1;
+		$ActCant = $rows -> CANTIDAD_ACTUAL;
+		}
     if($nr > 0){
+		
+		if($ActCant > 0){
+			$cantidad = $cantidad + $ActCant;
+		}
+    
         $Query = "UPDATE INVENTARIO_BALANCES SET CANTIDAD_ACTUAL  = $cantidad WHERE PRODUCTO_ID = $id ";
         //ibase_close($dbh);
         $resultado=ibase_query($dbh,$Query);
@@ -46,6 +51,8 @@ if (isset($json)) {
                 "respuesta" => "Ocurrio un error al actualizar");
         }  
     }
+	
+	
     //Obtiene Fecha Actual
     //ibase_close($dbh);
     /*$dbh;
@@ -86,6 +93,7 @@ if (isset($json)) {
     $Historial ="INSERT INTO INVENTARIO_HISTORIAL (PRODUCTO_ID, CUANDO_FUE, CANTIDAD_ANTERIOR, CANTIDAD, DESCRIPCION, COSTO_UNITARIO, COSTO_DESPUES, AJUSTE_ID, RECIBO_INVENTARIO_ID, VENTA_ID, TRANSFERENCIA_ID, CAJA_ID, VENTA_POR_KIT, USUARIO_ID, ALMACEN_ID ) VALUES 
     ($id, CURRENT_TIMESTAMP, $ActCant, $cantidad- $ActCant, 'Recepcion de inventario # $ID_Inventario', $costo,$costo ,null,$ID_Inventario, null,null,1,0, $usuarioID, 1 )";
     $resINVHist = ibase_query($dbh,$Historial) or die(  ibase_errmsg() );
+	
 }
 
 ibase_close($dbh);
