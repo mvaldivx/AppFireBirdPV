@@ -86,7 +86,7 @@ ipServidor: any;
     await loading.present();
   }
 
-   async getData(){
+   getData(){
      if(this.ipServidor != undefined){
         this.productosShow=[];
       this.http.get('http://'+ this.ipServidor +'/firebird/ObtieneProductos.php',{}).subscribe(data => {
@@ -149,44 +149,5 @@ ipServidor: any;
       })
     }
   }
-
-  /*filtrar(tipo){
-
-    if((this.fCodigo.length > 0 && tipo === 0 )|| (this.fDescripcion.length > 0 && tipo === 1)){
-      if(tipo === 0){
-        this.fDescripcion= '';
-      }else{
-        this.fCodigo='';
-      }
-      this.productosShow =[];
-      var cadena ="";
-      if(tipo === 0){
-        cadena = this.fCodigo.toUpperCase();
-      }else{
-        cadena = this.fDescripcion.toUpperCase();
-      }
-      let data = new HttpParams().append('tipo', tipo).append('cadena',cadena).append('dataType', 'application/json; charset=utf-8');
-      //data.append('cadena',cadena);
-      
-      this.http.get('http://'+ this.ipServidor +'/firebird/ProductosFiltrados.php',{params:data}).subscribe(data => {
-        var prod ;
-        prod = data;
-        prod.forEach(element => {
-          this.productosShow.push({id:element.id, 
-                              codigo: element.codigo, 
-                              Descripcion: element.Descripcion, 
-                              Existencia: element.Existencia, 
-                              Venta: element.Venta})
-        });
-        this.filtrado = true;
-      })
-    }else{
-      if(this.filtrado){
-        this.presentLoading()
-        this.getData();
-        this.filtrado = false;
-      }
-    }
-  }*/
 
 }
