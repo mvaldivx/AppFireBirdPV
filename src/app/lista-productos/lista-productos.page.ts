@@ -111,7 +111,7 @@ contProd=30;
     console.log("entro");
     setTimeout(()=>{
       var cantAct = this.contProd
-      for(let i = cantAct; i < cantAct + 30; i++){
+      for(let i = cantAct; i < cantAct + 30 && i < this.productos.length; i++){
           this.productosShow.push(this.productos[i]);
           this.contProd += 1;
         }
@@ -153,10 +153,18 @@ contProd=30;
         this.productosShow = this.productos.filter((item)=>{
           return item.codigo.toUpperCase().indexOf(this.fCodigo.toUpperCase()) > -1;
         })
+        if(this.productosShow.length >= 30){
+          this.productosShow = this.productosShow.slice(0,30);
+        }
+        
       }else{
         this.productosShow = this.productos.filter((item)=>{
           return item.Descripcion.toUpperCase().indexOf(this.fDescripcion.toUpperCase()) > -1;
         })
+        if(this.productosShow.length >= 30){
+          this.productosShow = this.productosShow.slice(0,30);
+        }
+        
       }
       
     }else{
