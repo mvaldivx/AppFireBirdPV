@@ -160,9 +160,7 @@ contProd=30;
       }
       
     }else{
-      this.productosShow = this.productos.filter((item)=>{
-        return item.codigo.toUpperCase().indexOf(this.fCodigo.toUpperCase()) > -1;
-      })
+      this.ObtieneProdShow()
     }
   }
 
