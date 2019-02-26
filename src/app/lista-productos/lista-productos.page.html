@@ -55,6 +55,12 @@
               </ion-row>
         </div>
         
+        
       </ion-grid>
   </div>
+
+  <ion-infinite-scroll  (ionInfinite)="ObtieneProdShowev($event)">
+    <ion-infinite-scroll-content>
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

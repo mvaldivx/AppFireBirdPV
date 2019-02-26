@@ -34,7 +34,8 @@ ion-content{
    grid-auto-rows: minmax(15px, auto);
 
 }
-.listProd[scrolly=true], div[scrolly=true] {
+
+/*.listProd[scrolly=true], div[scrolly=true] {
     position: relative;
     overflow: hidden;
     ::-webkit-scrollbar {
@@ -48,6 +49,7 @@ ion-content{
 .listProd[scrolly=true] {
     overflow-y: auto;
   }
+  */
 .blue{background-color: #84a0cf86;}
 .headTab{
     max-height:40px !important;

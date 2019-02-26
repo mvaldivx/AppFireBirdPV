@@ -17,6 +17,7 @@ fCodigo:'';
 fDescripcion:'';
 filtrado = false;
 ipServidor: any;
+contProd=30;
 
   constructor(
     public modalCtrl: ModalController,
@@ -92,16 +93,31 @@ ipServidor: any;
       this.http.get('http://'+ this.ipServidor +'/firebird/ObtieneProductos.php',{}).subscribe(data => {
         var prod ;
         prod = data;
-        prod.forEach(element => {
-          this.productos.push({id:element.id, 
-                              codigo: element.codigo, 
-                              Descripcion: element.Descripcion, 
-                              Existencia: element.Existencia, 
-                              Venta: element.Venta})
-        this.productosShow = this.productos;
+        this.productos = prod;
+        this.ObtieneProdShow();
+        //this.productosShow = this.productos;
+       
         });
-      })
      }
+  }
+
+  ObtieneProdShow(){
+    for(let i = 0; i < 30; i++){
+      this.productosShow.push(this.productos[i]);
+    }
+  }
+
+  ObtieneProdShowev(event){
+    console.log("entro");
+    setTimeout(()=>{
+      var cantAct = this.contProd
+      for(let i = cantAct; i < cantAct + 30; i++){
+          this.productosShow.push(this.productos[i]);
+          this.contProd += 1;
+        }
+      event.target.complete();
+      
+    },3500);
   }
 
   FilterData(tipo){
