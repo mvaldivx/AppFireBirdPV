@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, LoadingController, AlertController } from '@ionic/angular';
+import { ModalController, LoadingController, AlertController, NavController } from '@ionic/angular';
 import { ListaProductosPage } from '../lista-productos/lista-productos.page';
 import { OverlayEventDetail } from '@ionic/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -35,7 +35,8 @@ IdUsuario:any;
     public barcodeScanner: BarcodeScanner,
     public storage: Storage,
     public router: Router,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -46,7 +47,7 @@ IdUsuario:any;
   verificaUsuario(){
     this.storage.get('usuario').then((data)=>{
       if(isNull(data)){
-       this.router.navigateByUrl('login');
+       this.navCtrl.navigateRoot('login');
       }else{
         this.IdUsuario = data.id;
         this.getIp();

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { isNull } from 'util';
 import { Storage } from '@ionic/storage';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, NavController } from '@ionic/angular';
 import { IpMaquinaPage } from '../ip-maquina/ip-maquina.page';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
@@ -20,7 +20,8 @@ export class ReporteMovimientosPage implements OnInit {
     public storage : Storage,
     public alertCtrl: AlertController,
     public modalCtrl: ModalController,
-    public http: HttpClient
+    public http: HttpClient,
+    public navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -34,7 +35,7 @@ export class ReporteMovimientosPage implements OnInit {
   verificaUsuario(){
     this.storage.get('usuario').then((data)=>{
       if(isNull(data)){
-       this.router.navigateByUrl('login');
+       this.navCtrl.navigateRoot('login');
       }else{
         this.IdUsuario = data.id;
         this.getIp();

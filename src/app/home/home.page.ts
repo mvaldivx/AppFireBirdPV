@@ -22,7 +22,7 @@ export class HomePage {
   ValidaUsuario(){
     this.storage.get('usuario').then((data)=>{
      if(isNull(data)){
-      this.router.navigateByUrl('login');
+      this.navCtrl.navigateRoot('login');
      }
     })
   }

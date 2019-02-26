@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-
-import { Platform, ModalController, MenuController } from '@ionic/angular';
+import { Platform, ModalController, MenuController, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
 import { IpMaquinaPage } from './ip-maquina/ip-maquina.page';
 import { OverlayEventDetail } from '@ionic/core';
+import { isNull } from 'util';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +20,8 @@ export class AppComponent {
     private storage: Storage,
     private router: Router,
     private modalCtrl: ModalController,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    public navCtrl: NavController
   ) {
     this.initializeApp();
   }
@@ -29,12 +30,21 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.ValidaUsuario()
     });
+  }
+
+  ValidaUsuario(){
+    this.storage.get('usuario').then((data)=>{
+     if(isNull(data)){
+      this.navCtrl.navigateRoot('login');
+     }
+    })
   }
 
   CerrarSesion(){
     this.storage.remove('usuario');
-    window.location.reload()
+    this.navCtrl.navigateRoot('login')
   }
 
   goPage(page){
