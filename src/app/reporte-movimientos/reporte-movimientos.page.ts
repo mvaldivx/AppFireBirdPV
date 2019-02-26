@@ -22,10 +22,12 @@ export class ReporteMovimientosPage implements OnInit {
     public modalCtrl: ModalController,
     public http: HttpClient,
     public navCtrl: NavController
-  ) { }
+  ) {
+    this.verificaUsuario()
+   }
 
   ngOnInit() {
-    this.verificaUsuario()
+    
   }
 
   close(){

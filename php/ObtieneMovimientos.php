@@ -5,7 +5,7 @@ $data = array();
 $dia = $_GET["dia"];
 $mes = $_GET["mes"];
 $anio = $_GET["anio"];
-$Date = $anio."-".$mes."-".$dia;
+$Date = $anio."-".$mes."-".$dia." 00:00";
 $fecha = Date("Y-m-d",strtotime($Date));
 //Fecha siguiente
 $sigFecha = Date("Y-m-d",strtotime($Date. ' + 1 day'));

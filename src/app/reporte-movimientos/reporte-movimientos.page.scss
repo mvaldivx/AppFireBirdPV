@@ -8,10 +8,34 @@ ion-toolbar{
     height:100%;
 }
 .Productos{
-    width:107%;
+    width:100%;
     height:80%;
     margin-left: -15px;
+    min-width:850px  !important;
+    overflow: hidden;
+    white-space: nowrap;
+    
+  ::-webkit-scrollbar {
+    display: none;
+  }
+    .wrapper {
+      overflow: auto;
+    }
 }
+
+div[scrollx=true], div[scrolly=true] {
+  position: relative;
+  overflow: hidden;
+}
+
+div[scrollx=true] {
+  overflow-x: auto;
+}
+
+div[scrolly=true] {
+  overflow-y: auto;
+}
+
 .wrapper{
     height:100%;
     grid-gap: 10px;
@@ -21,7 +45,7 @@ ion-toolbar{
    grid-auto-rows: minmax(15px, auto);
 
 }
-.listProd[scrolly=true], div[scrolly=true] {
+/*.listProd[scrolly=true], div[scrolly=true] {
     position: relative;
     overflow: hidden;
     ::-webkit-scrollbar {
@@ -34,7 +58,7 @@ ion-toolbar{
   
 .listProd[scrolly=true] {
     overflow-y: auto;
-  }
+  }*/
 .blue{background-color: #84a0cf86;}
 .headTab{
     max-height:40px !important;
