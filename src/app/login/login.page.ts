@@ -49,7 +49,7 @@ DireccionIp= '';
         this.router.navigateByUrl('home');
       }else{
         let data = new HttpParams().append('usuario', this.usr).append('pass',this.pass).append('dataType', 'application/json; charset=utf-8');
-        this.http.get('http://' + this.DireccionIp + '/firebird/ValidaUsuario.php', {params: data}).subscribe(data =>{
+        this.http.get('http://' + this.DireccionIp + '/WSFB/Api/Users/ValidaUsuario', {params: data}).subscribe(data =>{
         let res :any;
         res = data;  
         if(res.id != undefined){

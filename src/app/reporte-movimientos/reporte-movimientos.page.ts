@@ -95,7 +95,7 @@ export class ReporteMovimientosPage implements OnInit {
     .append('anio', anio.toString())
     .append('IdUsuario', this.IdUsuario)
     .append('dataType', 'application/json; charset=utf-8');
-    this.http.get('http://'+ this.ipServidor +'/firebird/ObtieneMovimientos.php',{params: data}).subscribe(data=>{
+    this.http.get('http://'+ this.ipServidor +'/WSFB/Api/Productos/ObtieneMovimientos',{params: data}).subscribe(data=>{
      var mov;
      mov = data;  
      this.Movimientos =[];

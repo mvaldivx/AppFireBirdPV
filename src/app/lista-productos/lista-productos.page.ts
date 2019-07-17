@@ -90,7 +90,7 @@ contProd=30;
    getData(){
      if(this.ipServidor != undefined){
         this.productosShow=[];
-      this.http.get('http://'+ this.ipServidor +'/firebird/ObtieneProductos.php',{}).subscribe(data => {
+      this.http.get('http://'+ this.ipServidor +'/WSFB/Api/Productos/ObtieneProductos',{}).subscribe(data => {
         var prod ;
         prod = data;
         this.productos = prod;

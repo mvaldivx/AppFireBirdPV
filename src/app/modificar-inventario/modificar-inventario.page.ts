@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, LoadingController, AlertController, NavController } from '@ionic/angular';
 import { ListaProductosPage } from '../lista-productos/lista-productos.page';
 import { OverlayEventDetail } from '@ionic/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { ToastController } from '@ionic/angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { isNull } from 'util';
@@ -109,9 +109,8 @@ IdUsuario:any;
       .append('cant',this.cantidad)
       .append('id', this.id)
       .append('venta', this.Venta)
-      .append('IdUsuario', this.IdUsuario)
-      .append('dataType', 'application/json; charset=utf-8');
-      this.http.get('http://'+ this.ipServidor +'/firebird/ActualizaInventario.php',{params: data}).subscribe(data=>{
+      .append('IdUsuario', this.IdUsuario);
+      this.http.get('http://'+ this.ipServidor +'/WSFB/Api/Productos/ActualizaInventario',{params: data}).subscribe(data=>{
           this.id='';
           this.codigo= '';
           this.codigoMostrar= '';
@@ -171,10 +170,14 @@ IdUsuario:any;
       if(this.codigo.length > 0){
         var encontrado:boolean= false;
         this.codigo = this.codigo.toUpperCase();
-        let data = new HttpParams().append('tipo', '0').append('cadena',this.codigo.toUpperCase()).append('dataType', 'application/json; charset=utf-8');
+        let data = new HttpParams()
+        .append('tipo', '0')
+        .append('cadena',this.codigo.toUpperCase())
+        //.append('dataType', 'application/json; charset=utf-8')
+        //.append('headers', 'Access-Control-Allow-Origin ="*"');
         //data.append('cadena',cadena);
         
-        this.http.get('http://'+ this.ipServidor +'/firebird/ProductosFiltrados.php',{params:data}).subscribe(data => {
+        this.http.get('http://'+ this.ipServidor +'/WSFB/Api/Productos/ProductosFiltrados',{params:data}).subscribe(data => {
           var prod ;
           prod = data;
           if(prod.length > 0){

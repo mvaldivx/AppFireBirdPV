@@ -33,9 +33,9 @@ export class IpMaquinaPage implements OnInit {
   }
 
   TestConnection(){
-    this.http.get('http://'+ this.DireccionIp + '/firebird/ProbarConexion.php',{}).subscribe(data =>{
+    this.http.get('http://'+ this.DireccionIp + '/WSFB/Api/Users/ProbarConexion',{}).subscribe(data =>{
       this.presentAlert('Exito','Conectado exitosamente')
-    },error => this.presentAlert('Error','Ocurrio un error en la conexion'));
+    },error => this.presentAlert('Error','Ocurrio un error en la conexion ' + JSON.stringify(error)));
   }
 
   async presentAlert(header, mensaje) {
