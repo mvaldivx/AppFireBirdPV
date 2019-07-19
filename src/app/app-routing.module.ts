@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'lista-productos', loadChildren: './lista-productos/lista-productos.module#ListaProductosPageModule' },
   { path: 'ip-maquina', loadChildren: './ip-maquina/ip-maquina.module#IpMaquinaPageModule' },
   { path: 'reporte-movimientos', loadChildren: './reporte-movimientos/reporte-movimientos.module#ReporteMovimientosPageModule' },
+  { path: 'verificador', loadChildren: './verificador/verificador.module#VerificadorPageModule' },
 
 ];
 

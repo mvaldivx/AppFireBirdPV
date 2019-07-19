@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button icon="close">
+
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>Verificar precio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div >
+    <ion-button class="btn-escanear" color="secondary" (click)="EscanearCodigo()">
+      <ion-icon slot="start" name="barcode"></ion-icon>Escanear Codigo
+    </ion-button>
+  </div>
+  <div class="codigo">
+    <ion-button class="btn-buscar" color="secondary" (click) ="openModal()"><ion-icon name="search"></ion-icon></ion-button>
+    <ion-item>
+        <ion-label position="floating">Codigo</ion-label>
+        <ion-input clearInput [(ngModel)]="codigo" (ionBlur)="codigoBlur()" (keyup.enter)="codigoEnter()"></ion-input>
+    </ion-item>
+  </div>
+
+  <div *ngIf="Descripcion != undefined && codigo != ''" class="Descripcion">
+    <div class="Desc">
+      <H1><span>Codigo: </span>{{codigoMostrar}}</H1>
+      <H1><span>Descripcion: </span>{{Descripcion}}</H1>
+      <H1><span>Existencia: </span>{{Existencia}}</H1>
+      <H1><span>Precio: $</span>{{Venta}}</H1>
+    </div>
+  </div>
+</ion-content>
